@@ -80,6 +80,7 @@ class UsingReactiveOperationsTest {
                 .take(5);
 
         StepVerifier.create(longFlux)
+                .expectNext(0L)
                 .expectNext(1L)
                 .expectNext(2L)
                 .expectNext(3L)
@@ -102,7 +103,7 @@ class UsingReactiveOperationsTest {
         StepVerifier.create(mergedFlux)
                 .expectNext("Batman")
                 .expectNext("Lasagna")
-                .expectNext("Spriderman")
+                .expectNext("Spiderman")
                 .expectNext("Lollipops")
                 .expectNext("Tor")
                 .expectNext("Apples")
@@ -118,13 +119,13 @@ class UsingReactiveOperationsTest {
 
         Flux<Tuple2<String, String>> zippedFlux = Flux.zip(characterFlux, foodFlux);
 
-        StepVerifier.create(zippedFlux) .expectNextMatches(p ->
-                p.getT1().equals("Garfield") &&
-                        p.getT2().equals("Lasagna")) .expectNextMatches(p ->
-                p.getT1().equals("Kojak") &&
-                        p.getT2().equals("Lollipops")) .expectNextMatches(p ->
-                p.getT1().equals("Barbossa") &&
-                        p.getT2().equals("Apples")) .verifyComplete();
+        StepVerifier.create(zippedFlux).expectNextMatches(p ->
+                p.getT1().equals("Batman") &&
+                        p.getT2().equals("Lasagna")).expectNextMatches(p ->
+                p.getT1().equals("Spiderman") &&
+                        p.getT2().equals("Lollipops")).expectNextMatches(p ->
+                p.getT1().equals("Tor") &&
+                        p.getT2().equals("Apples")).verifyComplete();
     }
 
     @Test
